@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -80,7 +81,45 @@ bool isTree(){
 }
 
 void topologicalSort(){
-    
+    queue<int> colaP; // cola nodos con grado de entrada 0
+    queue<int> colaR; // respuesta
+    // lista con grados de entrada de cada nodo;
+    int size = adjMatrix.size();
+    int inDegree[size];
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            if(adjMatrix[i][j]){
+                inDegree[j]++;
+            }
+        }
+    }
+
+    // llena nodos de entrada o
+    for(int i = 0; i < size; i++){
+        if(inDegree[i] == 0){
+            colaP.push(i);
+        }
+    }
+
+    while(!colaP.empty()){
+        int V = colaP.front();
+        colaP.pop();
+        colaR.push(V);
+
+        for(int W : adjMatrix[V]){
+            inDegree[W]--;
+            if(inDegree[W] == 0){
+                colaP.push(W);
+            }
+        }
+
+    }
+
+    for(int i = 0; colaR.size(); i++){
+        cout << colaR.front() << " ";
+        colaR.pop();
+    }
+
 }
 
 bool bipartiteGraph(vector<vector<int>>){
