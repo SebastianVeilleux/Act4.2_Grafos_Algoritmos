@@ -122,7 +122,30 @@ void topologicalSort(){
 
 }
 
-bool bipartiteGraph(vector<vector<int>>){
+bool bipartiteGraph(vector<vector<int>> adjMatrix){
+    // Algoritmo de amplitud
+    vector<int> color(adjMatrix.size(), -1);
+    queue<int> cola;
+    cola.push(0);
+    color[0] = 0;
+    while(!cola.empty()){
+        int node = cola.front();
+        cola.pop();
+        for(int i = 0; i < adjMatrix.size(); i++){
+            if(adjMatrix[node][i]){
+                if(color[i] == -1){
+                    if(color[node] == 0){
+                        color[i] = 1; 
+                    }else{
+                        color[i] = 0;
+                    }
+                }else if(color[i] == color[node]){
+                    return false;
+                }
+            }
+        }
+    }
+    
     return true;
 }
 
