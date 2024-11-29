@@ -6,8 +6,14 @@
 
 using namespace std;
 
+
+// complejidad basada en esta referencia: https://www.udb.edu.sv/udb_files/recursos_guias/informatica-ingenieria/programacion-iv/2019/ii/guia-10.pdf
+// v -> no. vertices
+// e -> no. aristas
+
 // DFS no copiado y pegado de internet pero no recuerdo bien la referencia para hacerlo
 // probablemente chatGPT
+// Complejidad: O(V + E) 
 bool MyGraph::isConnected(){
     int root = 0;
     vector<bool> visited(this->matriz.size(), false);
@@ -44,7 +50,7 @@ void MyGraph::loadGraph(vector<vector<int>> &matrix){
 }
 
 
-
+// Complejidad: O(V^2)
 bool MyGraph::isTree(){
     // check if it has n-1 edges
     int edges = 0; 
@@ -88,6 +94,7 @@ bool MyGraph::isTree(){
     return true;
 }
 
+// Complejidad: O(V^2)
 void MyGraph::topologicalSort(){
     
     queue<int> colaP; // cola nodos con grado de entrada 0
@@ -131,6 +138,7 @@ void MyGraph::topologicalSort(){
     }
 }
 
+// Complejidad: O(V + E)
 bool MyGraph::bipartiteGraph(){
     // Algoritmo de amplitud
     vector<int> color(this->matriz.size(), -1);
