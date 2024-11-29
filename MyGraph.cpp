@@ -6,6 +6,8 @@
 
 using namespace std;
 
+// DFS no copiado y pegado de internet pero no recuerdo bien la referencia para hacerlo
+// probablemente chatGPT
 bool MyGraph::isConnected(){
     int root = 0;
     vector<bool> visited(this->matriz.size(), false);
