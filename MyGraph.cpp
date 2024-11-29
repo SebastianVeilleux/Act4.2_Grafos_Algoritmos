@@ -87,11 +87,12 @@ bool MyGraph::isTree(){
 }
 
 void MyGraph::topologicalSort(){
+    
     queue<int> colaP; // cola nodos con grado de entrada 0
     queue<int> colaR; // respuesta
     // lista con grados de entrada de cada nodo;
     int size = this->matriz.size();
-    int inDegree[size];
+    int inDegree[size] = {0};
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
             if(this->matriz[i][j]){
@@ -99,33 +100,33 @@ void MyGraph::topologicalSort(){
             }
         }
     }
-
     // llena nodos de entrada o
     for(int i = 0; i < size; i++){
         if(inDegree[i] == 0){
             colaP.push(i);
         }
     }
-
     while(!colaP.empty()){
         int V = colaP.front();
         colaP.pop();
         colaR.push(V);
-
-        for(int W : this->matriz[V]){
+        for(int W=0; W < size; W++){
             inDegree[W]--;
             if(inDegree[W] == 0){
                 colaP.push(W);
             }
         }
-
     }
-
     for(int i = 0; colaR.size(); i++){
         cout << colaR.front() << " ";
         colaR.pop();
     }
 
+    // resultado
+    while(!colaR.empty()){
+        cout<<colaR.front()<<" ";
+        colaR.pop();
+    }
 }
 
 bool MyGraph::bipartiteGraph(){
