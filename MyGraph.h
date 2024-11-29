@@ -1,4 +1,4 @@
-//Sebastian Alejandro Veilleux Amaya A0163
+//Sebastian Alejandro Veilleux Amaya A01644977
 
 #ifndef MYGRAPH_H
 #define MYGRAPH_H
@@ -12,12 +12,10 @@ class MyGraph{
     private:
         vector<vector<int>> matriz;
         //poner como privados los metodos adicionales
-        void DFS(int nodoActual, vector<bool>& estadoActual);
+        bool isConnected();
     public:
         MyGraph(vector<vector<int>>& matriz);
         void loadGraph(vector<vector<int>>& matriz);
-        void DFS(int nodoI);
-        void BFS(int nodoI);
         bool isTree();
         void topologicalSort();
         bool bipartiteGraph();

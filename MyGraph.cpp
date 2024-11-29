@@ -1,14 +1,14 @@
+// Sebastian Alejandro Veilleux Amaya A01644977
+#include "MyGraph.h"
 #include <iostream>
 #include <vector>
 #include <queue>
 
 using namespace std;
 
-vector<vector<int>> adjMatrix;
-
-bool isConnected(){
+bool MyGraph::isConnected(){
     int root = 0;
-    vector<bool> visited(adjMatrix.size(), false);
+    vector<bool> visited(this->matriz.size(), false);
     vector<int> stack;
     stack.push_back(root);
     visited[root] = true;
@@ -16,8 +16,8 @@ bool isConnected(){
     while(!stack.empty()){
         int node = stack.back();
         stack.pop_back();
-        for(int i = 0; i < adjMatrix.size(); i++){
-            if(adjMatrix[node][i] && !visited[i]){
+        for(int i = 0; i < this->matriz.size(); i++){
+            if(this->matriz[node][i] && !visited[i]){
                 stack.push_back(i);
                 visited[i] = true;
             }
@@ -33,38 +33,44 @@ bool isConnected(){
     return true;
 }
 
-void loadGraph(vector<vector<int>> matrix){
-    adjMatrix = matrix;
+MyGraph::MyGraph(vector<vector<int>>& matriz){
+    loadGraph(matriz);
 }
 
-bool isTree(){
+void MyGraph::loadGraph(vector<vector<int>> &matrix){
+    this->matriz = matrix;
+}
+
+
+
+bool MyGraph::isTree(){
     // check if it has n-1 edges
     int edges = 0; 
-    for(int i = 0; i < adjMatrix.size(); i++){
-        for(int j = 0; j < adjMatrix.size(); j++){
-            if(adjMatrix[i][j]){
+    for(int i = 0; i < this->matriz.size(); i++){
+        for(int j = 0; j < this->matriz.size(); j++){
+            if(this->matriz[i][j]){
                 edges++;
             }
         }
     }
 
-    if(edges != adjMatrix.size() - 1){
+    if(edges != this->matriz.size() - 1){
         return false;
     }
 
     // Check that node 0 (root) has no incoming edges
-    for(int i = 0; i < adjMatrix.size(); i++){
+    for(int i = 0; i < this->matriz.size(); i++){
         int incomingEdges = 0;
-        if(adjMatrix[i][0]){
+        if(this->matriz[i][0]){
             return false;
         }
     }
 
     // Any other node has zero incoming edges
-    for(int i = 0; i < adjMatrix.size(); i++){
+    for(int i = 0; i < this->matriz.size(); i++){
         int incomingEdges = 0;
-        for(int j = 1; j < adjMatrix.size(); j++){
-            if(adjMatrix[j][i]){
+        for(int j = 1; j < this->matriz.size(); j++){
+            if(this->matriz[j][i]){
                 incomingEdges++;
             }
         }
@@ -80,15 +86,15 @@ bool isTree(){
     return true;
 }
 
-void topologicalSort(){
+void MyGraph::topologicalSort(){
     queue<int> colaP; // cola nodos con grado de entrada 0
     queue<int> colaR; // respuesta
     // lista con grados de entrada de cada nodo;
-    int size = adjMatrix.size();
+    int size = this->matriz.size();
     int inDegree[size];
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
-            if(adjMatrix[i][j]){
+            if(this->matriz[i][j]){
                 inDegree[j]++;
             }
         }
@@ -106,7 +112,7 @@ void topologicalSort(){
         colaP.pop();
         colaR.push(V);
 
-        for(int W : adjMatrix[V]){
+        for(int W : this->matriz[V]){
             inDegree[W]--;
             if(inDegree[W] == 0){
                 colaP.push(W);
@@ -122,17 +128,17 @@ void topologicalSort(){
 
 }
 
-bool bipartiteGraph(vector<vector<int>> adjMatrix){
+bool MyGraph::bipartiteGraph(){
     // Algoritmo de amplitud
-    vector<int> color(adjMatrix.size(), -1);
+    vector<int> color(this->matriz.size(), -1);
     queue<int> cola;
     cola.push(0);
     color[0] = 0;
     while(!cola.empty()){
         int node = cola.front();
         cola.pop();
-        for(int i = 0; i < adjMatrix.size(); i++){
-            if(adjMatrix[node][i]){
+        for(int i = 0; i < this->matriz.size(); i++){
+            if(this->matriz[node][i]){
                 if(color[i] == -1){
                     if(color[node] == 0){
                         color[i] = 1; 
@@ -147,9 +153,4 @@ bool bipartiteGraph(vector<vector<int>> adjMatrix){
     }
     
     return true;
-}
-
-int main(){
-
-    return 0;
 }
